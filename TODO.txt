@@ -11,3 +11,10 @@
  -word that slows down other words
 
 -make it look nicer
+
+-counters
+ -score
+ -words per minute
+ -keystrokes per minute
+ -misses
+ -words shot
