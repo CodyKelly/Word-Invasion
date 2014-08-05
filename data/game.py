@@ -21,7 +21,7 @@ def run():
 
     #initialize everything
     player_ = player.Player(windowRect)
-    generator_ = generator.Generator(windowRect, player_)
+    generator.init(windowRect, player_)
     gameObjects = pygame.sprite.Group()
 
     #game loop
@@ -38,7 +38,7 @@ def run():
                 sys.exit()
 
         #update everything
-        generator_.update(gameObjects)
+        generator.update(gameObjects)
         player_.update(events, gameObjects)
         gameObjects.update()
 

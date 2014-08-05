@@ -7,7 +7,7 @@
  -reduce word speed
 
 -add more power up words
- -word that clears others from screen
+ -word that clears others from screen - DONE!
  -word that slows down other words
 
 -make it look nicer

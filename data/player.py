@@ -13,6 +13,7 @@ class Player(object):
         self.healthBarWidth = 20
         self.windowRect = windowRect
         self.text = eztext.Input(x=0,y=windowRect.height-self.healthBarWidth-32,font=font_)
+        self.lastWord = ''
     def update(self, events, gameObjects):
         self.text.update(events)
         for event in events:
@@ -21,7 +22,10 @@ class Player(object):
                     for obj in gameObjects:
                         if obj.string == self.text.value:
                             obj.activate()
+                    self.lastWord = self.text.value
                     self.text.value = ''
+                if event.key == pygame.K_UP:
+                    self.text.value = self.lastWord
         if self.health <= 0:
             self.isAlive = False
     def draw(self, screen):
