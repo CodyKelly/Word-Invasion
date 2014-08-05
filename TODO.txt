@@ -1,8 +1,13 @@
 -add little gun to zap words
+
 -adjust speed of word by its length
+
 -add difficulty menu
  -shorten words
  -reduce word speed
+
 -add more power up words
  -word that clears others from screen
  -word that slows down other words
+
+-make it look nicer
