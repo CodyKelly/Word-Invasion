@@ -1,6 +1,9 @@
 import pygame, eztext
 
 pygame.font.init()
+pygame.mixer.init()
+
+laserSound = pygame.mixer.Sound('data/sfx/laser.ogg')
 
 fontSize = 32
 fontFile = "data/cal.ttf"
@@ -10,9 +13,9 @@ class Player(object):
     def __init__(self, windowRect):
         self.health = 100
         self.isAlive = True
-        self.healthBarWidth = 20
+        self.healthBarWidth = 25
         self.windowRect = windowRect
-        self.text = eztext.Input(x=0,y=windowRect.height-self.healthBarWidth-32,font=font_)
+        self.text = eztext.Input(x=5,y=windowRect.height-self.healthBarWidth-32,font=font_, prompt='> ')
         self.lastWord = ''
     def update(self, events, gameObjects):
         self.text.update(events)
@@ -21,6 +24,8 @@ class Player(object):
                 if event.key == pygame.K_RETURN:
                     for obj in gameObjects:
                         if obj.string == self.text.value:
+                            # laserSound.play()
+                            # this got a little annoying, maybe one day
                             obj.activate()
                     self.lastWord = self.text.value
                     self.text.value = ''

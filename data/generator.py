@@ -8,36 +8,53 @@ def read_words(words_file):
 wordList = read_words('data/words.txt')
 
 class Generator(object):
-    def __init__(self, windowRect, player, wordObject, delay):
+    def __init__(self, windowRect, player):
         self.player = player
         self.rect = pygame.Rect
         self.windowRect = windowRect
-        self.delay = delay
+        self.delay = 100
         self.frames = 0
-        self.wordObject = wordObject
-    def update(self, gameObjects):
+        self.wordObject = None
+    def update(self, wordGroup):
         if self.frames < self.delay:
             self.frames += 1
         else:
             self.frames = 0
             word = self.get_random_word()
-            gameObjects.add(self.wordObject(word, self.player, self.windowRect, gameObjects))
+            wordGroup.add(self.wordObject(word, self.player, self.windowRect, wordGroup))
     def get_wordObject(self):
         return random.choice(self.wordObjectTypes)
     def get_random_word(self):
         return random.choice(wordList)
 
-class BombWordGenerator(Generator):
+class SpecialWordGenerator(Generator):
     def __init__(self, windowRect, player):
-        Generator.__init__(self, windowRect, player, wordobjects.BombWord, 2500)
+        Generator.__init__(self, windowRect, player)
+        self.delay = 2500 #2500
+        self.wordObjects = [
+            wordobjects.BombWord,
+            # wordobjects.SlowMotionWord # still have to work out some kinks
+        ]
+    def update(self, wordGroup):
+        if self.frames < self.delay:
+            self.frames += 1
+        else:
+            self.frames = 0
+            word = self.get_random_word()
+            wordObject = random.choice(self.wordObjects)
+            wordGroup.add(wordObject(word, self.player, self.windowRect, wordGroup))
 
 class HealthWordGenerator(Generator):
     def __init__(self, windowRect, player):
-        Generator.__init__(self, windowRect, player, wordobjects.HealthWord, 800)
+        Generator.__init__(self, windowRect, player)
+        self.wordObject = wordobjects.HealthWord
+        self.delay = 800
 
 class WordGenerator(Generator):
     def __init__(self, windowRect, player):
-        Generator.__init__(self, windowRect, player, wordobjects.NormalWord, 150)
+        Generator.__init__(self, windowRect, player)
+        self.wordObject = wordobjects.NormalWord
+        self.delay = 150 #150
 
 generators = []
 def init(windowRect, player):
@@ -45,9 +62,9 @@ def init(windowRect, player):
     generators = [
     WordGenerator(windowRect, player),
     HealthWordGenerator(windowRect, player),
-    BombWordGenerator(windowRect, player)
+    SpecialWordGenerator(windowRect, player)
     ]
 
-def update(gameObjects):
+def update(wordGroup):
     for g in generators:
-        g.update(gameObjects)
+        g.update(wordGroup)

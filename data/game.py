@@ -3,8 +3,16 @@ __author__ = 'lizardfingers'
 import pygame, sys
 import generator
 import player
+import random
 
 pygame.init()
+
+music1 = pygame.mixer.Sound('data/sfx/music1.ogg')
+music2 = pygame.mixer.Sound('data/sfx/music2.ogg')
+music = [music1, music2]
+musicChoice = random.choice(music)
+# musicChoice.play(loops=-1)
+
 
 windowRect = pygame.Rect((0,0),(1000, 800))
 
