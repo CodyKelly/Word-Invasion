@@ -1,4 +1,4 @@
-import pygame, eztext
+import pygame, eztext, math
 
 pygame.font.init()
 pygame.mixer.init()
@@ -8,6 +8,17 @@ laserSound = pygame.mixer.Sound('data/sfx/laser.ogg')
 fontSize = 32
 fontFile = "data/cal.ttf"
 font_ = pygame.font.Font(fontFile, fontSize)
+
+class Turret(object):
+    def __init__(self, windowRect):
+        self.x, self.y = windowRect.midbottom
+        self.angle = 0
+    def shoot(self, pos):
+        (x,y) = pos
+        diffX = x - self.x
+        diffY = y - self.y
+        newAngle = math.atan2(diffY, diffX)*180/math.pi
+
 
 class Player(object):
     def __init__(self, windowRect):
